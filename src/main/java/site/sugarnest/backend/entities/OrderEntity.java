@@ -12,9 +12,10 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, columnDefinition = "datetime default current_timestamp")
+    @Column(columnDefinition = "TIMESTAMP")
     private Date createAt;
 
+    @Column(columnDefinition = "TIMESTAMP")
     private Date deliveryAt;
 
     private String statusPay;
@@ -40,9 +41,6 @@ public class OrderEntity {
     @Column(columnDefinition = "longtext")
     private String note;
 
-    @ManyToOne
-    @JoinColumn(name = "id_employee")
-    private AccountEntity employee;
-
+    @Column(columnDefinition = "TIMESTAMP")
     private Date updateAt;
 }

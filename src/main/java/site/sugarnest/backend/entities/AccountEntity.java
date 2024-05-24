@@ -41,20 +41,19 @@ public class AccountEntity {
     @Column(nullable = false)
     private String phone;
 
-    @Column(columnDefinition = "varchar(99) default 'false'")
     private String isDelete;
 
-    @Column(columnDefinition = "varchar(99) default 'true'")
     private String isActive;
 
-    @Column(columnDefinition = "datetime default current_timestamp")
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime createAt;
 
     private String image;
 
-    @Column(columnDefinition = "datetime default current_timestamp")
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime updateAt;
 
+    @Column(columnDefinition = "TIMESTAMP")
     private Date deleteAt;
 
     private String typeName;
@@ -77,9 +76,9 @@ public class AccountEntity {
         this.updateAt = LocalDateTime.now();
     }
 
-    /**
-     * Verified email
-     */
-    public String verificationCode;
+    @Column(columnDefinition = "VARCHAR(255)")
+    private String verificationCode;
+
+    @Column(columnDefinition = "VARCHAR(255)")
     private String enabled;
 }

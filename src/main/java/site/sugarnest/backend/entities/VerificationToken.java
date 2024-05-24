@@ -25,5 +25,6 @@ public class VerificationToken {
     @JoinColumn(nullable = false, name = "id_account")
     private AccountEntity accountEntity;
 
+    @Column(columnDefinition = "TIMESTAMP")
     private Date expiryDate;
 }

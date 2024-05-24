@@ -1,4 +1,5 @@
 package site.sugarnest.backend.entities;
+
 import lombok.Data;
 
 import jakarta.persistence.*;
@@ -25,9 +26,10 @@ public class DiscountEntity {
 
     private Integer quantity;
 
-    @Column(nullable = false, columnDefinition = "datetime default current_timestamp")
+    @Column(columnDefinition = "TIMESTAMP")
     private Date startTime;
 
+    @Column(columnDefinition = "TIMESTAMP")
     private Date endTime;
 
     @Column(name = "condition_text")
@@ -35,9 +37,10 @@ public class DiscountEntity {
 
     private Integer status;
 
-    @Column(nullable = false, columnDefinition = "datetime default current_timestamp")
+    @Column(columnDefinition = "TIMESTAMP")
     private Date createAt;
 
+    @Column(columnDefinition = "TIMESTAMP")
     private Date updateAt;
 
     private Integer isDelete;

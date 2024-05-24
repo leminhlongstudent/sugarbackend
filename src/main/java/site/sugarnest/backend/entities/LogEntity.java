@@ -24,11 +24,11 @@ public class LogEntity {
 
     private String content;
 
-    @Column(nullable = false, columnDefinition = "datetime default current_timestamp")
+    @Column(columnDefinition = "TIMESTAMP")
     private Date createAt;
 
     private String status;
 
-    @Column(nullable = false, columnDefinition = "datetime default current_timestamp")
+    @Column(columnDefinition = "TIMESTAMP")
     private Date updateAt;
 }

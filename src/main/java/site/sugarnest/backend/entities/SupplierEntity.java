@@ -20,5 +20,6 @@ public class SupplierEntity {
 
     private String isActive;
 
+    @Column(columnDefinition = "TIMESTAMP")
     private Date createAt;
 }

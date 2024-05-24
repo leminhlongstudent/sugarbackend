@@ -23,10 +23,10 @@ public class InventoryEntity {
 
     private Long quantity;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TIMESTAMP")
     private Date dateAdd;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TIMESTAMP")
     private Date lastUpdatedDate;
 }
 

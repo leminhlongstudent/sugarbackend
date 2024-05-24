@@ -14,7 +14,6 @@ public class CommentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, columnDefinition = "longtext")
     private String content;
 
     @ManyToOne
@@ -29,11 +28,13 @@ public class CommentEntity {
     @JoinColumn(name = "id_parent")
     private CommentEntity parentCommentEntity;
 
-    @Column(columnDefinition = "datetime default current_timestamp")
+    @Column(columnDefinition = "TIMESTAMP")
     private Date createAt;
 
+    @Column(columnDefinition = "TIMESTAMP")
     private Date updateAt;
 
+    @Column(columnDefinition = "TIMESTAMP")
     private Date deleteAt;
 
     private String status;
