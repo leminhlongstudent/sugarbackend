@@ -16,7 +16,6 @@ public class ImportCouponEntity {
     @JoinColumn(name = "id_supplier")
     private SupplierEntity supplierEntity;
 
-    @Column(columnDefinition = "TIMESTAMP")
     private Date date;
 
     private String status;
@@ -25,12 +24,9 @@ public class ImportCouponEntity {
     @JoinColumn(name = "id_producer")
     private ProducerEntity producerEntity;
 
-    @Column(columnDefinition = "TIMESTAMP")
     private Date createAt;
 
-    @Column(columnDefinition = "TIMESTAMP")
     private Date updateAt;
 
-    @Column(columnDefinition = "TIMESTAMP")
     private Date deleteAt;
 }

@@ -22,7 +22,7 @@ public class EmailService {
     private JavaMailSender javaMailSender;
 
     @Autowired
-    private IAccountRepository accountRepository;
+    private IAccountRepository iaccountRepository;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
 
@@ -36,21 +36,18 @@ public class EmailService {
             message.setSubject(subject);
             message.setText("Mã xác thực: " + body);
             javaMailSender.send(message);
-            System.out.println("Email sent");
         } catch (UnsupportedEncodingException e) {
             throw new AppException(ErrorCode.SEND_MAIL_FAILED);
         }
     }
 
     public void verifyMail(SendEmailDto sendEmailDto) {
-        AccountEntity entity = accountRepository.findByEmail(sendEmailDto.getEmail())
+        AccountEntity entity = iaccountRepository.findByEmail(sendEmailDto.getEmail())
                 .orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_EXITED));
-        System.out.println(entity);
-        System.out.println(entity.getEmail());
         try {
             if(entity.getVerificationCode().equals(passwordEncoder.encode(sendEmailDto.getVerificationCode())))
                 entity.setEnabled("true");
-            accountRepository.save(entity);
+            iaccountRepository.save(entity);
         } catch (Exception e) {
             throw new AppException(ErrorCode.VERIFICATION_ACCOUNT_INCORRECT_CODE);
         }

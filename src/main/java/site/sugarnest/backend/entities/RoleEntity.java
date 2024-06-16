@@ -17,6 +17,6 @@ public class RoleEntity {
     private String name;
     private  String description;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     Set<PermissionEntity> permissions;
 }

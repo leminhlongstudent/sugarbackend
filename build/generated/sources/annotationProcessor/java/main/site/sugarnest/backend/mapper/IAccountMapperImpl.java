@@ -20,7 +20,7 @@ import site.sugarnest.backend.entities.RoleEntity;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-05-24T12:26:46+0700",
+    date = "2024-06-17T00:07:54+0700",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.7.jar, environment: Java 18.0.2 (Amazon.com Inc.)"
 )
 @Component
@@ -37,9 +37,7 @@ public class IAccountMapperImpl implements IAccountMapper {
         accountResponse.setId( accountEntity.getId() );
         accountResponse.setAccountName( accountEntity.getAccountName() );
         accountResponse.setFullName( accountEntity.getFullName() );
-        if ( accountEntity.getBirthday() != null ) {
-            accountResponse.setBirthday( Date.from( accountEntity.getBirthday().atStartOfDay( ZoneOffset.UTC ).toInstant() ) );
-        }
+        accountResponse.setBirthday( accountEntity.getBirthday() );
         accountResponse.setAddress( accountEntity.getAddress() );
         accountResponse.setEmail( accountEntity.getEmail() );
         accountResponse.setPhone( accountEntity.getPhone() );
@@ -73,9 +71,7 @@ public class IAccountMapperImpl implements IAccountMapper {
         accountEntity.accountName( accountDto.getAccountName() );
         accountEntity.password( accountDto.getPassword() );
         accountEntity.fullName( accountDto.getFullName() );
-        if ( accountDto.getBirthday() != null ) {
-            accountEntity.birthday( LocalDateTime.ofInstant( accountDto.getBirthday().toInstant(), ZoneOffset.UTC ).toLocalDate() );
-        }
+        accountEntity.birthday( accountDto.getBirthday() );
         accountEntity.address( accountDto.getAddress() );
         accountEntity.email( accountDto.getEmail() );
         accountEntity.phone( accountDto.getPhone() );

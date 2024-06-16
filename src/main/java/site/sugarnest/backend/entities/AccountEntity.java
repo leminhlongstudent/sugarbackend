@@ -2,6 +2,7 @@ package site.sugarnest.backend.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Entity
+@ToString
 public class AccountEntity {
 
     @Id
@@ -30,7 +32,7 @@ public class AccountEntity {
     private String fullName;
 
     @Column(nullable = false, columnDefinition = "DATE")
-    private LocalDate birthday;
+    private Date birthday;
 
     @Column(nullable = false)
     private String address;
@@ -41,19 +43,20 @@ public class AccountEntity {
     @Column(nullable = false)
     private String phone;
 
+    @Column(columnDefinition = "varchar(99) default 'false'")
     private String isDelete;
 
+    @Column(columnDefinition = "varchar(99) default 'true'")
     private String isActive;
 
-    @Column(columnDefinition = "TIMESTAMP")
+    @Column(columnDefinition = "datetime default current_timestamp")
     private LocalDateTime createAt;
 
     private String image;
 
-    @Column(columnDefinition = "TIMESTAMP")
+    @Column(columnDefinition = "datetime default current_timestamp")
     private LocalDateTime updateAt;
 
-    @Column(columnDefinition = "TIMESTAMP")
     private Date deleteAt;
 
     private String typeName;
@@ -65,7 +68,8 @@ public class AccountEntity {
     @Column(columnDefinition = "int default '0'")
     private Integer number_login_fail;
 
-    @ManyToMany
+
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<RoleEntity> roles;
 
     public void setCreateAt() {
@@ -76,9 +80,6 @@ public class AccountEntity {
         this.updateAt = LocalDateTime.now();
     }
 
-    @Column(columnDefinition = "VARCHAR(255)")
-    private String verificationCode;
-
-    @Column(columnDefinition = "VARCHAR(255)")
+    public String verificationCode;
     private String enabled;
 }

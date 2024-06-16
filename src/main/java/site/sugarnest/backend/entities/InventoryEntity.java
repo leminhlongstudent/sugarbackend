@@ -1,32 +1,37 @@
 package site.sugarnest.backend.entities;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import jakarta.persistence.*;
-
+import lombok.ToString;
 import java.util.Date;
 
 @Entity
 @Table(name = "inventorys")
 @Data
+@ToString
 public class InventoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_product", nullable = false)
-    private ProductEntity productEntity;
-
-    @ManyToOne
-    @JoinColumn(name = "id_size_color", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "id_size_color_products", nullable = false)
+    @JsonBackReference
     private SizeColorProductEntity sizeColorProductEntity;
 
     private Long quantity;
-
-    @Column(columnDefinition = "TIMESTAMP")
     private Date dateAdd;
-
-    @Column(columnDefinition = "TIMESTAMP")
     private Date lastUpdatedDate;
+
+    public void setDateAdd() {
+        this.dateAdd = new Date();
+    }
+    public void setLastUpdatedDate() {
+        this.lastUpdatedDate = new Date();
+    }
 }
+
+
 

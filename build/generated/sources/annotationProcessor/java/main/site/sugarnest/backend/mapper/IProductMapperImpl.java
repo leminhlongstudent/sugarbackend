@@ -14,7 +14,7 @@ import site.sugarnest.backend.entities.SizeColorProductEntity;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-05-24T12:26:46+0700",
+    date = "2024-06-17T00:07:54+0700",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.7.jar, environment: Java 18.0.2 (Amazon.com Inc.)"
 )
 @Component
@@ -34,14 +34,12 @@ public class IProductMapperImpl implements IProductMapper {
         productDto.setSupplierEntity( product.getSupplierEntity() );
         productDto.setProducerEntity( product.getProducerEntity() );
         productDto.setCategoryEntity( product.getCategoryEntity() );
-        productDto.setSubCategoryEntity( product.getSubCategoryEntity() );
         productDto.setIsActive( product.getIsActive() );
         productDto.setIsDelete( product.getIsDelete() );
         productDto.setStatus( product.getStatus() );
-        productDto.setProductPriceEntity( product.getProductPriceEntity() );
-        List<ImageProductEntity> list = product.getImageProducts();
+        List<ImageProductEntity> list = product.getImageProductEntity();
         if ( list != null ) {
-            productDto.setImageProducts( new ArrayList<ImageProductEntity>( list ) );
+            productDto.setImageProductEntity( new ArrayList<ImageProductEntity>( list ) );
         }
         List<SizeColorProductEntity> list1 = product.getSizeColorProductsEntity();
         if ( list1 != null ) {
@@ -77,14 +75,12 @@ public class IProductMapperImpl implements IProductMapper {
         productEntity.setSupplierEntity( product.getSupplierEntity() );
         productEntity.setProducerEntity( product.getProducerEntity() );
         productEntity.setCategoryEntity( product.getCategoryEntity() );
-        productEntity.setSubCategoryEntity( product.getSubCategoryEntity() );
         productEntity.setIsActive( product.getIsActive() );
         productEntity.setIsDelete( product.getIsDelete() );
         productEntity.setStatus( product.getStatus() );
-        productEntity.setProductPriceEntity( product.getProductPriceEntity() );
-        List<ImageProductEntity> list = product.getImageProducts();
+        List<ImageProductEntity> list = product.getImageProductEntity();
         if ( list != null ) {
-            productEntity.setImageProducts( new ArrayList<ImageProductEntity>( list ) );
+            productEntity.setImageProductEntity( new ArrayList<ImageProductEntity>( list ) );
         }
         List<SizeColorProductEntity> list1 = product.getSizeColorProductsEntity();
         if ( list1 != null ) {
@@ -131,8 +127,12 @@ public class IProductMapperImpl implements IProductMapper {
 
         sizeColorProductEntity.setId( SizeColorProductDto.getId() );
         sizeColorProductEntity.setProductEntity( SizeColorProductDto.getProductEntity() );
+        sizeColorProductEntity.setInventoryEntity( SizeColorProductDto.getInventoryEntity() );
         sizeColorProductEntity.setSize( SizeColorProductDto.getSize() );
         sizeColorProductEntity.setColor( SizeColorProductDto.getColor() );
+        sizeColorProductEntity.setListPrice( SizeColorProductDto.getListPrice() );
+        sizeColorProductEntity.setDiscount( SizeColorProductDto.getDiscount() );
+        sizeColorProductEntity.setDiscountPrice( SizeColorProductDto.getDiscountPrice() );
 
         return sizeColorProductEntity;
     }

@@ -11,13 +11,8 @@ public class ProducerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false, unique = true)
     private String nameProducer;
-
-    @Column(columnDefinition = "mediumtext")
-    private String information;
-
-    @Column(columnDefinition = "mediumtext")
-    private String logo;
 
     private String isActive;
 }

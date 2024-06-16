@@ -19,8 +19,4 @@ public class CategoryEntity {
 
     @Column
     private String imageCategory;
-
-    @OneToMany(mappedBy = "categoryEntity")
-    @JsonIgnore
-    private List<SubCategoryEntity> subCategoryEntity;
 }

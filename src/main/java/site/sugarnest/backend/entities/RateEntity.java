@@ -21,5 +21,7 @@ public class RateEntity {
 
     private Long numberStar;
 
+    private int numberEdit;
+
     private String status;
 }

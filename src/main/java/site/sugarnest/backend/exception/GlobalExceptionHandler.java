@@ -2,13 +2,12 @@ package site.sugarnest.backend.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import site.sugarnest.backend.dto.dto.ApiResponse;
+import site.sugarnest.backend.dto.response.ApiResponse;
+import java.util.Map;
 
-import java.util.Objects;
-
+import org.springframework.security.access.AccessDeniedException;
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -26,29 +25,30 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(apiResponse);
     }
 
-    @ExceptionHandler(value = RuntimeException.class)
-     ResponseEntity<ApiResponse> handleRuntimeException(final RuntimeException e) {
-        ApiResponse apiDto = new ApiResponse();
-
-        apiDto.setCode(1001);
-        apiDto.setMessage(e.getMessage());
-
-        return ResponseEntity.badRequest().body(apiDto);
-    }
-
     @ExceptionHandler(value = AppException.class)
-    ResponseEntity<ApiResponse> handleRuntimeException(AppException appException) {
-        ErrorCode errorCode = appException.getErrorCode();
-        ApiResponse apiDto = new ApiResponse();
+    ResponseEntity<ApiResponse> handlingAppException(AppException exception) {
+        ErrorCode errorCode = exception.getErrorCode();
+        ApiResponse apiResponse = new ApiResponse();
 
-        apiDto.setCode(errorCode.getCode());
-        apiDto.setMessage(errorCode.getMessage());
+        apiResponse.setCode(errorCode.getCode());
+        apiResponse.setMessage(errorCode.getMessage());
 
-        return ResponseEntity.badRequest().body(apiDto);
+        return ResponseEntity.status(errorCode.getStatusCode()).body(apiResponse);
     }
 
-    @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    ResponseEntity<String> handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
-        return ResponseEntity.badRequest().body(Objects.requireNonNull(e.getFieldError()).getDefaultMessage());
+    @ExceptionHandler(value = AccessDeniedException.class)
+    ResponseEntity<ApiResponse> handlingAccessDeniedException(AccessDeniedException exception) {
+        ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
+
+        return ResponseEntity.status(errorCode.getStatusCode())
+                .body(ApiResponse.builder()
+                        .code(errorCode.getCode())
+                        .message(errorCode.getMessage())
+                        .build());
+    }
+    private String mapAttribute(String message, Map<String, Object> attributes) {
+        String minValue = String.valueOf(attributes.get(MIN_ATTRIBUTE));
+
+        return message.replace("{" + MIN_ATTRIBUTE + "}", minValue);
     }
 }

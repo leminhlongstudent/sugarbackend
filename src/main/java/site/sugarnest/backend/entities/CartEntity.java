@@ -19,10 +19,9 @@ public class CartEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(columnDefinition = "TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "datetime default current_timestamp")
     private Date createdAt;
 
-    @Column(columnDefinition = "TIMESTAMP")
     private Date updatedAt;
 
     @ManyToOne

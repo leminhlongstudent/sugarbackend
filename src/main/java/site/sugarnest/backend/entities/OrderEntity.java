@@ -3,7 +3,10 @@ import lombok.Data;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 @Entity
 @Table(name = "orders")
 @Data
@@ -12,10 +15,9 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(columnDefinition = "TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "datetime default current_timestamp")
     private Date createAt;
 
-    @Column(columnDefinition = "TIMESTAMP")
     private Date deliveryAt;
 
     private String statusPay;
@@ -34,13 +36,11 @@ public class OrderEntity {
 
     private String address;
 
-    private Integer wardId;
-
-    private Integer districtId;
+    @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderDetailEntity> orderItems  = new ArrayList<>();
 
     @Column(columnDefinition = "longtext")
     private String note;
 
-    @Column(columnDefinition = "TIMESTAMP")
     private Date updateAt;
 }

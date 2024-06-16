@@ -1,7 +1,9 @@
 package site.sugarnest.backend.entities;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import jakarta.persistence.*;
+
 @Entity
 @Table(name = "order_details")
 @Data
@@ -11,6 +13,7 @@ public class OrderDetailEntity {
     private Integer id;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_order", nullable = false)
     private OrderEntity orderEntity;
 
@@ -21,8 +24,6 @@ public class OrderDetailEntity {
     private Integer quantity;
 
     private Double price;
-
-    private String node;
 
     private String productSize;
 

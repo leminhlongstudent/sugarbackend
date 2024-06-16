@@ -1,14 +1,17 @@
 package site.sugarnest.backend.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import site.sugarnest.backend.dto.dto.ApiResponse;
+import site.sugarnest.backend.dto.request.PermissionRequest;
+import site.sugarnest.backend.dto.response.ApiResponse;
 import site.sugarnest.backend.dto.request.RoleRequest;
 import site.sugarnest.backend.dto.response.RoleResponse;
 import site.sugarnest.backend.service.Athorization.RoleService;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/roles")
 @AllArgsConstructor
@@ -16,6 +19,7 @@ public class RoleController {
     RoleService roleService;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ACCOUNTS_POST')")
     ApiResponse<RoleResponse> createRole(@RequestBody RoleRequest request) {
         return ApiResponse.<RoleResponse>builder()
                 .message("Permission created!")
@@ -23,7 +27,16 @@ public class RoleController {
                 .build();
     }
 
+    @PostMapping("/{name}/permissions")
+    @PreAuthorize("hasAuthority('ACCOUNTS_POST')")
+    ApiResponse<RoleResponse> addPermission(@PathVariable String name, @RequestBody PermissionRequest request) {
+        return ApiResponse.<RoleResponse>builder()
+                .message("Permission added!")
+                .result(roleService.addPermission(name, request))
+                .build();
+    }
     @GetMapping
+    @PreAuthorize("hasAuthority('ACCOUNTS_GET')")
     ApiResponse<List<RoleResponse>> getAllRole() {
         return ApiResponse.<List<RoleResponse>>builder()
                 .message("All permissions!")
@@ -32,10 +45,21 @@ public class RoleController {
     }
 
     @DeleteMapping("/{name}")
-    ApiResponse<Void> deletePermission(@PathVariable String name) {
+    @PreAuthorize("hasAuthority('ACCOUNTS_DELETE')")
+    ApiResponse<Void> deleteRole(@PathVariable String name) {
         roleService.delete(name);
         return ApiResponse.<Void>builder()
                 .message("Permission deleted!")
                 .build();
     }
+
+    @DeleteMapping("/{name}/permissions/{permissionName}")
+    @PreAuthorize("hasAuthority('ACCOUNTS_DELETE')")
+    ApiResponse<RoleResponse> deletePermission(@PathVariable String name, @PathVariable String permissionName) {
+        return ApiResponse.<RoleResponse>builder()
+                .message("Permission deleted!")
+                .result(roleService.deletePermission(name, permissionName))
+                .build();
+    }
+
 }

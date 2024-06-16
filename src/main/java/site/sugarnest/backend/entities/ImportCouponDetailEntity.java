@@ -21,8 +21,8 @@ public class ImportCouponDetailEntity {
     private Double price;
 
     private Long quantity;
-    @Column(columnDefinition = "TIMESTAMP")
+
     private Date createAt;
-    @Column(columnDefinition = "TIMESTAMP")
+
     private Date deleteAt;
 }

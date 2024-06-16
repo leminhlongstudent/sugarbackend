@@ -3,7 +3,7 @@ package site.sugarnest.backend.controllers;
 import com.nimbusds.jose.JOSEException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import site.sugarnest.backend.dto.dto.ApiResponse;
+import site.sugarnest.backend.dto.response.ApiResponse;
 import site.sugarnest.backend.dto.dto.AuthRequestDto;
 import site.sugarnest.backend.dto.dto.AuthResponseDto;
 import site.sugarnest.backend.dto.request.IntrospectRequest;

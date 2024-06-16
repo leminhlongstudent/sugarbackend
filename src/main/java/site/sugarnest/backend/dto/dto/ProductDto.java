@@ -13,12 +13,10 @@ public class ProductDto {
     private SupplierEntity supplierEntity;
     private ProducerEntity producerEntity;
     private CategoryEntity categoryEntity;
-    private SubCategoryEntity subCategoryEntity;
     private String isActive;
     private String isDelete;
     private String status;
-    private ProductPriceEntity productPriceEntity;
-    private List<ImageProductEntity> imageProducts;
+    private List<ImageProductEntity> imageProductEntity;
     private List<SizeColorProductEntity> sizeColorProductsEntity;
     private List<RateEntity> ratesEntity;
     private List<ImportCouponDetailEntity> importCouponDetailsEntity;
