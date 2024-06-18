@@ -32,6 +32,9 @@ public interface IProductService {
     List<ProductDto> findMostViewedProducts(int limit);
 
     List<ProductDto> findRecommendedProducts(Long categoryId, int limit);
+    Long getTotalProducts();
+
+    Page<ProductDto> searchProduct(String nameProduct, int page, int size);
 
 }
 

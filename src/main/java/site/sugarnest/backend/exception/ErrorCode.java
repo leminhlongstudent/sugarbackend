@@ -32,6 +32,8 @@ public enum ErrorCode {
     SIZE_COLOR_PRODUCT_NOT_FOUND(1022, "Size Color Product Not Found", HttpStatus.NOT_FOUND),
     RATE_NOT_EXITED(1023, "Rate Not Exited", HttpStatus.NOT_FOUND),
     RATE_EDIT_LIMIT(1024, "Rate Edit Limit", HttpStatus.BAD_REQUEST),
+    INVALID_TOKEN(1025, "Invalid Token", HttpStatus.BAD_REQUEST),
+
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

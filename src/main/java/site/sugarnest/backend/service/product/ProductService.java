@@ -114,6 +114,20 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public Long getTotalProducts() {
+        return iProductRepository.count();
+    }
+
+    @Override
+    public Page<ProductDto> searchProduct(String nameProduct, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<ProductEntity> products = iProductRepository.findByNameProductContainingIgnoreCase(nameProduct, pageable).getContent();
+        return iProductRepository.findByNameProductContainingIgnoreCase(nameProduct, pageable)
+                .map(product -> iProductMapper.mapToProductDto(product));
+    }
+
+
+    @Override
     public List<ProductDto> getProductByAdmin() {
         List<ProductEntity> products = iProductRepository.getProductByAdmin("false");
         return products.stream().map(product -> iProductMapper.mapToProductDto(product)).collect(Collectors.toList());

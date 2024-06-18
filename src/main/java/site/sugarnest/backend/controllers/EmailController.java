@@ -1,16 +1,15 @@
 package site.sugarnest.backend.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import site.sugarnest.backend.dto.response.ApiResponse;
 import site.sugarnest.backend.dto.dto.EmailRequestDto;
 import site.sugarnest.backend.dto.dto.SendEmailDto;
 import site.sugarnest.backend.service.account.EmailService;
 
-@Controller
+
+@CrossOrigin("*")
+@RestController
 @RequestMapping("/email")
 public class EmailController {
 
@@ -20,6 +19,15 @@ public class EmailController {
     @PostMapping("/send_email")
     public ApiResponse<String> sendEmail(@RequestBody EmailRequestDto emailRequest) {
         emailService.sendMail(emailRequest.getAccountEmail(), emailRequest.getSubject(), emailRequest.getBody());
+        return ApiResponse.<String>builder()
+                .message("Email sent successfully")
+                .build();
+    }
+
+    @PostMapping("/send_reset_password_email")
+    public ApiResponse<String> sendResetPasswordEmail(@RequestBody EmailRequestDto emailRequest) {
+        String token = emailService.generateResetToken(emailRequest.getAccountEmail());
+        emailService.sendResetPasswordEmail(emailRequest.getAccountEmail(), token);
         return ApiResponse.<String>builder()
                 .message("Email sent successfully")
                 .build();

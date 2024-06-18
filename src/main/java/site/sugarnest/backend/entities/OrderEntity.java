@@ -1,4 +1,5 @@
 package site.sugarnest.backend.entities;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import jakarta.persistence.*;
@@ -23,6 +24,7 @@ public class OrderEntity {
     private String statusPay;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_account", nullable = false)
     private AccountEntity accountEntity;
 

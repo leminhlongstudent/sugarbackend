@@ -16,6 +16,8 @@ public interface IAccountService {
 
     void editMyPassword(PasswordChangeRequest passwordChangeRequest);
 
+    void resetPassword(String token, String newPassword);
+
     List<AccountResponse> findAll();
 
     AccountResponse findById(Long id);
@@ -27,4 +29,7 @@ public interface IAccountService {
     void deleteAccount(Long id);
 
     AccountEntity getAccount();
+    Long totalAccount();
+    List<AccountResponse> getNewAccounts(int limit);
+
 }

@@ -11,6 +11,7 @@ import site.sugarnest.backend.dto.dto.ProductFilterDto;
 import site.sugarnest.backend.dto.response.ApiResponse;
 import site.sugarnest.backend.dto.dto.ProductDto;
 import site.sugarnest.backend.service.product.IProductService;
+import site.sugarnest.backend.service.product.InventoryService;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductController {
     private IProductService iProductService;
+    private InventoryService inventoryService;
 
     @PostMapping
     @PreAuthorize("hasAuthority('PRODUCTS_POST')")
@@ -71,6 +73,19 @@ public class ProductController {
                 .result(productDtos)
                 .build();
     }
+    @GetMapping("/search/{nameProduct}")
+    public ApiResponse<Page<ProductDto>> searchProduct(
+            @PathVariable("nameProduct") String nameProduct,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int size) {
+        Page<ProductDto> productDtos = iProductService.searchProduct(nameProduct, page, size);
+        return ApiResponse.<Page<ProductDto>>builder()
+                .message("Success")
+                .result(productDtos)
+                .build();
+    }
+
+
     @GetMapping("/category/{id}/limit/{limit}")
     public ApiResponse<List<ProductDto>> findProductByCategoryId(@PathVariable("id") Long categoryId, @PathVariable("limit") int limit) {
         List<ProductDto> productDtos = iProductService.findProductByCategoryId(categoryId, limit);
@@ -132,6 +147,26 @@ public class ProductController {
         iProductService.deleteProduct(id);
         return ApiResponse.<String>builder()
                 .message("Product deleted!")
+                .build();
+    }
+
+    @GetMapping("/out-of-stock/{threshold}")
+    @PreAuthorize("hasAuthority('PRODUCTS_GET')")
+    public ApiResponse<List<ProductDto>> findProductOutOfStock(@PathVariable("threshold") Integer threshold ){
+        List<ProductDto> sizeColorProductEntity = inventoryService.getProductsOutOfStock(threshold);
+        return ApiResponse.<List<ProductDto>>builder()
+                .message("Success")
+                .result(sizeColorProductEntity)
+                .build();
+    }
+
+    @GetMapping("/total")
+    @PreAuthorize("hasAuthority('PRODUCTS_GET')")
+    public ApiResponse<Long> getTotalProducts() {
+        Long totalProducts = iProductService.getTotalProducts();
+        return ApiResponse.<Long>builder()
+                .message("Success")
+                .result(totalProducts)
                 .build();
     }
 

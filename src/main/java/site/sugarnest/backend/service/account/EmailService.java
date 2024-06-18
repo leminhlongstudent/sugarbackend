@@ -9,11 +9,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import site.sugarnest.backend.dto.dto.SendEmailDto;
 import site.sugarnest.backend.entities.AccountEntity;
+import site.sugarnest.backend.entities.TokenEntity;
 import site.sugarnest.backend.exception.AppException;
 import site.sugarnest.backend.exception.ErrorCode;
 import site.sugarnest.backend.reponsitoties.IAccountRepository;
+import site.sugarnest.backend.reponsitoties.ITokenRepository;
 
 import java.io.UnsupportedEncodingException;
+import java.util.UUID;
 
 @Service
 public class EmailService {
@@ -23,6 +26,32 @@ public class EmailService {
 
     @Autowired
     private IAccountRepository iaccountRepository;
+
+    @Autowired
+    private ITokenRepository tokenRepository;
+
+    public String generateResetToken(String email) {
+        String token = UUID.randomUUID().toString();
+        TokenEntity tokenEntity = new TokenEntity(email, token);
+        tokenRepository.save(tokenEntity);
+        return token;
+    }
+
+    public void sendResetPasswordEmail(String accountEmail, String token) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        InternetAddress fromAddress;
+        try {
+            fromAddress = new InternetAddress("20130253@st.hcmuaf.edu.vn", "SugarNest");
+            message.setFrom(String.valueOf(fromAddress));
+            message.setTo(accountEmail);
+            message.setSubject("Reset Password");
+            String resetLink = "http://localhost:3000/reset-password?token=" + token;
+            message.setText("Click the link to reset your password: " + resetLink);
+            javaMailSender.send(message);
+        } catch (UnsupportedEncodingException e) {
+            throw new AppException(ErrorCode.SEND_MAIL_FAILED);
+        }
+    }
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
 

@@ -34,4 +34,7 @@ public interface IProductRepository extends JpaRepository<ProductEntity, Long>, 
     @Query("SELECT p FROM ProductEntity p WHERE p.categoryEntity.id = :categoryId ORDER BY p.views DESC")
     List<ProductEntity> findRecommendedProducts(@Param("categoryId") Long categoryId, Pageable pageable);
 
+    Page<ProductEntity> findByNameProductContainingIgnoreCase(String nameProduct, Pageable pageable);
+
+
 }

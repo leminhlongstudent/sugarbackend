@@ -1,5 +1,6 @@
 package site.sugarnest.backend.controllers;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/carts")
+@AllArgsConstructor
 public class CartController {
     @Autowired
     private CartService cartService;
