@@ -30,7 +30,7 @@ public class JwtService {
                 .issuer("SugarNest.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(
-                        Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
+                        Instant.now().plus(5, ChronoUnit.MINUTES).toEpochMilli()
                 ))
                 .claim("id", account.getId())
                 .claim("scope", buildScope(account))
@@ -61,4 +61,3 @@ public class JwtService {
     }
 
 }
-

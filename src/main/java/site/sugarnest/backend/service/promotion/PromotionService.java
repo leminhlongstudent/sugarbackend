@@ -101,4 +101,26 @@ public class PromotionService {
             throw new AppException(ErrorCode.ACCOUNT_NOT_EXITED);
         }
     }
+
+    public boolean isPromotionApplicableToProduct(Long promotionId, Long productId) {
+        Optional<PromotionEntity> promotion = promotionRepository.findById(promotionId);
+        if (promotion.isPresent()) {
+            PromotionEntity promo = promotion.get();}
+        return false;
+    }
+
+    public boolean isPromotionApplicableToAccount(Long promotionId, Long accountId) {
+        Optional<PromotionEntity> promotion = promotionRepository.findById(promotionId);
+        if (promotion.isPresent()) {
+            PromotionEntity promo = promotion.get();
+        }
+        return false;
+    }
+
+    public boolean applyPromotionToOrder(Long promotionId, Long accountId, Long productId) {
+        boolean isProductApplicable = isPromotionApplicableToProduct(promotionId, productId);
+        boolean isAccountApplicable = isPromotionApplicableToAccount(promotionId, accountId);
+        return isProductApplicable && isAccountApplicable;
+    }
+
 }

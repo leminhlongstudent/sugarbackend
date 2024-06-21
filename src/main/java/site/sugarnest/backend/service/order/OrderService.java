@@ -52,6 +52,11 @@ public class OrderService implements IOrderService {
         CartEntity cart = cartService.getMyCart();
         List<CartItemEntity> cartItems = cart.getCartItems();
         OrderEntity order = getOrderEntity(orderRequest, cart);
+        if (orderRequest.getStatusPay()!=null && orderRequest.getStatusPay().equals("Đã thanh toán")){
+            order.setStatusPay("Đã thanh toán");
+        }else {
+            order.setStatusPay("Chưa thanh toán");
+        }
         iorderRepository.save(order);
 
         for (CartItemEntity cartItem : cartItems) {

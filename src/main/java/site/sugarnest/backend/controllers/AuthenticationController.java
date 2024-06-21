@@ -3,6 +3,7 @@ package site.sugarnest.backend.controllers;
 import com.nimbusds.jose.JOSEException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import site.sugarnest.backend.dto.request.RefreshRequest;
 import site.sugarnest.backend.dto.response.ApiResponse;
 import site.sugarnest.backend.dto.dto.AuthRequestDto;
 import site.sugarnest.backend.dto.dto.AuthResponseDto;
@@ -39,6 +40,15 @@ public class AuthenticationController {
                 .build();
 
     }
+    @PostMapping("/refresh")
+    public ApiResponse<AuthResponseDto> refresh(@RequestBody RefreshRequest request) throws ParseException, JOSEException {
+        var result = authenticationService.refreshToken(request);
+        return ApiResponse.<AuthResponseDto>builder()
+                .message("Refresh successful!")
+                .result(result)
+                .build();
+    }
+
     @PostMapping("/logout")
     public ApiResponse<Void> logout(@RequestBody LogoutRequest request) throws ParseException, JOSEException {
         authenticationService.logout(request);

@@ -50,4 +50,7 @@ dependencies {
     implementation 'com.cloudinary:cloudinary-http44:1.27.0'
 
 }
+jar.enabled = false
+
+
 
