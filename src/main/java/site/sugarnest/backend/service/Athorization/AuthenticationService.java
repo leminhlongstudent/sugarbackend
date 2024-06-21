@@ -85,7 +85,7 @@ public class AuthenticationService {
                 .issuer("SugarNest.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(
-                        Instant.now().plus(5, ChronoUnit.MINUTES).toEpochMilli()
+                        Instant.now().plus(2, ChronoUnit.HOURS).toEpochMilli()
                 ))
                 .claim("id", account.getId())
                 .claim("scope", buildScope(account))

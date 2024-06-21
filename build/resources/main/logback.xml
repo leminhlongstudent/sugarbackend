@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <springProperty name="LOG_HOME" source="log.path"/>
+    <springProperty name="LOG_FILE_NAME" source="log.file.name"/>
+    <springProperty name="LOG_FILE_EXT" source="log.file.ext"/>
+    <springProperty name="LOG_FILE_ZIP_PATTERN" source="log.file.zip.pattern"/>
+    <springProperty name="LOG_FILE_MAX_MB" source="log.file.maxMB"/>
+    <springProperty name="LOG_FILE_MAX_HISTORY" source="log.file.maxHistory"/>
+
+    <timestamp key="currentDate" datePattern="yyyy-MM-dd"/>
+
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${LOG_FILE_NAME}_${currentDate}${LOG_FILE_EXT}</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${LOG_FILE_ZIP_PATTERN}</fileNamePattern>
+            <maxFileSize>${LOG_FILE_MAX_MB}MB</maxFileSize>
+            <maxHistory>${LOG_FILE_MAX_HISTORY}</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{35} %class{0} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="ROLLING"/>
+    </root>
+</configuration>

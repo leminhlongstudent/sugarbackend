@@ -83,6 +83,7 @@ public class PromotionService {
         if (promotion.isPresent() && product.isPresent()) {
             PromotionEntity promotionEntity = promotion.get();
             ProductEntity productEntity = product.get();
+
             promotionRepository.save(promotionEntity);
         } else {
             throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
@@ -96,31 +97,10 @@ public class PromotionService {
         if (promotion.isPresent() && account.isPresent()) {
             PromotionEntity promotionEntity = promotion.get();
             AccountEntity accountEntity = account.get();
+
             promotionRepository.save(promotionEntity);
         } else {
             throw new AppException(ErrorCode.ACCOUNT_NOT_EXITED);
         }
     }
-
-    public boolean isPromotionApplicableToProduct(Long promotionId, Long productId) {
-        Optional<PromotionEntity> promotion = promotionRepository.findById(promotionId);
-        if (promotion.isPresent()) {
-            PromotionEntity promo = promotion.get();}
-        return false;
-    }
-
-    public boolean isPromotionApplicableToAccount(Long promotionId, Long accountId) {
-        Optional<PromotionEntity> promotion = promotionRepository.findById(promotionId);
-        if (promotion.isPresent()) {
-            PromotionEntity promo = promotion.get();
-        }
-        return false;
-    }
-
-    public boolean applyPromotionToOrder(Long promotionId, Long accountId, Long productId) {
-        boolean isProductApplicable = isPromotionApplicableToProduct(promotionId, productId);
-        boolean isAccountApplicable = isPromotionApplicableToAccount(promotionId, accountId);
-        return isProductApplicable && isAccountApplicable;
-    }
-
 }
