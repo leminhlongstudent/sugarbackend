@@ -37,8 +37,8 @@ public class PayPalService {
         payment.setTransactions(transactions);
 
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://localhost:3000/cart");
-        redirectUrls.setReturnUrl("http://localhost:3000/checkout");
+        redirectUrls.setCancelUrl("https://sugarnest.netlify.app/cart");
+        redirectUrls.setReturnUrl("https://sugarnest.netlify.app/checkout");
         payment.setRedirectUrls(redirectUrls);
 
         try {

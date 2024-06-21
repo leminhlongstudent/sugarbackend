@@ -45,7 +45,7 @@ public class EmailService {
             message.setFrom(String.valueOf(fromAddress));
             message.setTo(accountEmail);
             message.setSubject("Reset Password");
-            String resetLink = "http://localhost:3000/reset-password?token=" + token;
+            String resetLink = "https://sugarnest.netlify.app/reset-password?token=" + token;
             message.setText("Click the link to reset your password: " + resetLink);
             javaMailSender.send(message);
         } catch (UnsupportedEncodingException e) {
