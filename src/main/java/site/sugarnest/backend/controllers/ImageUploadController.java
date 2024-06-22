@@ -22,8 +22,8 @@ public class ImageUploadController {
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) {
         try {
             Map uploadResult = cloudinaryService.upload(file);
-            String url = (String) uploadResult.get("url");
-            return new ResponseEntity<>(url, HttpStatus.OK);
+            String secureUrl = (String) uploadResult.get("secure_url");
+            return new ResponseEntity<>(secureUrl, HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<>("Upload failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }

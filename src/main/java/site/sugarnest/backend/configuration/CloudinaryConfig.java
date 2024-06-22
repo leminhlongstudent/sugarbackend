@@ -13,6 +13,7 @@ public class CloudinaryConfig {
         return new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", "dox1v0f5d",
                 "api_key", "297374599641647",
-                "api_secret", "E2T7V7gZujHY9Ej8S8tgpu003t4"));
+                "api_secret", "E2T7V7gZujHY9Ej8S8tgpu003t4",
+                "secure", true)); // Ensure secure is set to true
     }
 }
