@@ -67,6 +67,8 @@ public class SecurityConfig {
             "/promotion/{id}",
             "/api/paypal/create-payment",
             "/api/paypal/execute-payment",
+            "/orders/point",
+            "/orders/set-point"
     };
 
     @Value("${SIGNER_KEY}")

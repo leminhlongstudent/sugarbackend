@@ -82,4 +82,5 @@ public class AccountEntity {
 
     public String verificationCode;
     private String enabled;
+    private Double point = 0.0;
 }

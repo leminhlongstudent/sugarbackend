@@ -14,7 +14,7 @@ import site.sugarnest.backend.entities.SizeColorProductEntity;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-22T00:24:25+0700",
+    date = "2024-06-25T02:52:13+0700",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.7.jar, environment: Java 18.0.2 (Amazon.com Inc.)"
 )
 @Component
@@ -37,6 +37,11 @@ public class IProductMapperImpl implements IProductMapper {
         productDto.setIsActive( product.getIsActive() );
         productDto.setIsDelete( product.getIsDelete() );
         productDto.setStatus( product.getStatus() );
+        if ( product.getCanCustom() != null ) {
+            productDto.setCanCustom( String.valueOf( product.getCanCustom() ) );
+        }
+        productDto.setBorderPath( product.getBorderPath() );
+        productDto.setBackgroundPath( product.getBackgroundPath() );
         List<ImageProductEntity> list = product.getImageProductEntity();
         if ( list != null ) {
             productDto.setImageProductEntity( new ArrayList<ImageProductEntity>( list ) );
@@ -98,6 +103,11 @@ public class IProductMapperImpl implements IProductMapper {
         if ( list4 != null ) {
             productEntity.setOrderDetailsEntity( new ArrayList<OrderDetailEntity>( list4 ) );
         }
+        if ( product.getCanCustom() != null ) {
+            productEntity.setCanCustom( Boolean.parseBoolean( product.getCanCustom() ) );
+        }
+        productEntity.setBorderPath( product.getBorderPath() );
+        productEntity.setBackgroundPath( product.getBackgroundPath() );
 
         return productEntity;
     }

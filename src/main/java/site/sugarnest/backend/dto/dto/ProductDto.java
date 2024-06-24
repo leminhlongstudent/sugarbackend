@@ -1,5 +1,6 @@
 package site.sugarnest.backend.dto.dto;
 
+import jakarta.persistence.Column;
 import lombok.*;
 import site.sugarnest.backend.entities.*;
 
@@ -16,6 +17,9 @@ public class ProductDto {
     private String isActive;
     private String isDelete;
     private String status;
+    private String canCustom="false";
+    private String borderPath = "";
+    private String backgroundPath = "";
     private List<ImageProductEntity> imageProductEntity;
     private List<SizeColorProductEntity> sizeColorProductsEntity;
     private List<RateEntity> ratesEntity;

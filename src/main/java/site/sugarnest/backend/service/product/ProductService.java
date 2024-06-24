@@ -190,7 +190,9 @@ public class ProductService implements IProductService {
                     sizeColorProductEntity.setInventoryEntity(inventoryEntity);
                     return sizeColorProductEntity;
                 }).collect(Collectors.toList());
-
+        productEntity.setBorderPath(productDto.getBorderPath());
+        productEntity.setBackgroundPath(productDto.getBackgroundPath());
+        productEntity.setCanCustom(productDto.getCanCustom().equals("true"));
         productEntity.setImageProductEntity(imageProductEntities);
         productEntity.setSizeColorProductsEntity(sizeColorProducts);
         ProductEntity updatedProductEntity = iProductRepository.save(productEntity);
