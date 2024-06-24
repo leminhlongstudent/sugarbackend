@@ -18,5 +18,6 @@ public interface IOrderService {
     Long getTotalOrders();
     Double getTotalAmount();
     Map<String, Double> getMonthlyRevenue(int startMonth, int startYear, int endMonth, int endYear);
+    Map<String, Double> getDailyRevenue(int startMonth, int startYear, int endMonth, int endYear);
     Map<String, Double> getRevenueByCategoryForMonth(int month, int year);
 }

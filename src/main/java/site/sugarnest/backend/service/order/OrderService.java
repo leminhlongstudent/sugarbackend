@@ -229,6 +229,27 @@ public class OrderService implements IOrderService {
 
         return monthlyRevenue;
     }
+    @Override
+    public Map<String, Double> getDailyRevenue(int startMonth, int startYear, int endMonth, int endYear) {
+        List<OrderEntity> orders = iorderRepository.findAll();
+        Map<String, Double> revenueByDay = new HashMap<>();
+
+        for (OrderEntity order : orders) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(order.getCreateAt());
+            int orderMonth = cal.get(Calendar.MONTH) + 1; // Calendar.MONTH is zero-based
+            int orderYear = cal.get(Calendar.YEAR);
+
+            if ((orderYear > startYear || (orderYear == startYear && orderMonth >= startMonth)) &&
+                    (orderYear < endYear || (orderYear == endYear && orderMonth <= endMonth))) {
+                String day = orderYear + "-" + (orderMonth < 10 ? "0" : "") + orderMonth + "-" + (cal.get(Calendar.DAY_OF_MONTH) < 10 ? "0" : "") + cal.get(Calendar.DAY_OF_MONTH);
+                Double revenue = order.getOrderItems().stream().mapToDouble(detail -> detail.getPrice() * detail.getQuantity()).sum();
+                revenueByDay.put(day, revenueByDay.getOrDefault(day, 0.0) + revenue);
+            }
+        }
+
+        return revenueByDay;
+    }
 
     @Override
     public Map<String, Double> getRevenueByCategoryForMonth(int month, int year) {
