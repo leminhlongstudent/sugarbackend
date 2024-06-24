@@ -22,6 +22,7 @@ public class OrderController {
 
     @PostMapping
     public ApiResponse<OrderResponse> createOrder(@RequestBody OrderRequest orderRequest) {
+        System.out.println("cc");
         OrderResponse orderResponse = iorderService.saveOrder(orderRequest);
         return ApiResponse.<OrderResponse>builder()
                 .code(200)
@@ -35,6 +36,21 @@ public class OrderController {
         return ApiResponse.<List<OrderResponse>>builder()
                 .code(200)
                 .result(orderResponseList)
+                .build();
+    }
+    @GetMapping("point")
+    public ApiResponse<Double> getPoint() {
+       Double point = iorderService.getPoint();
+        return ApiResponse.<Double>builder()
+                .code(200)
+                .result(point)
+                .build();
+    }
+    @GetMapping("set-point")
+    public ApiResponse<Double> setPoint() {
+       iorderService.setPoint();
+        return ApiResponse.<Double>builder()
+                .code(200)
                 .build();
     }
 
@@ -87,6 +103,7 @@ public class OrderController {
                 .result(totalOrders)
                 .build();
     }
+
 
     @GetMapping("total-amount")
     @PreAuthorize("hasAuthority('ORDERS_GET')")

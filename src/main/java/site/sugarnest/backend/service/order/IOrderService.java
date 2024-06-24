@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface IOrderService {
+    public Double getPoint();
+    public void setPoint();
     OrderResponse saveOrder(OrderRequest orderRequest);
     List<OrderResponse> getOrders();
     List<OrderResponse> getOrdersByAdmin();

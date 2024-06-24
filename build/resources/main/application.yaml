@@ -7,9 +7,10 @@ spring:
   application:
     name: back-end
   datasource:
-    url: jdbc:mysql://mysql-230df322-leminhlongg0902-7b28.g.aivencloud.com:21019/sugarnest
+    url: jdbc:mysql://mysql-230df322-leminhlongg0902-7b28.g.aivencloud.com:21019/gizmohub
     username: avnadmin
     password: AVNS_Zk6DixIty4EcdfPXqzT
+
     driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
     properties:

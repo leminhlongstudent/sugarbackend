@@ -30,4 +30,7 @@ public class CartItemEntity {
     private String productSize;
 
     private String productColor;
+    private String customPath;
+    @Column(name = "is_Custom",columnDefinition = "tinyint default 0")
+    private Boolean isCustom = false;
 }

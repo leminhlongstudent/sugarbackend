@@ -1,15 +1,19 @@
 package site.sugarnest.backend.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 import site.sugarnest.backend.dto.request.PromotionRequest;
 import site.sugarnest.backend.dto.response.PromotionResponse;
 import site.sugarnest.backend.dto.response.PromotionResponse.PromotionResponseBuilder;
+import site.sugarnest.backend.entities.AccountEntity;
+import site.sugarnest.backend.entities.ProductEntity;
 import site.sugarnest.backend.entities.PromotionEntity;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-22T00:24:26+0700",
+    date = "2024-06-25T02:52:13+0700",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.7.jar, environment: Java 18.0.2 (Amazon.com Inc.)"
 )
 @Component
@@ -36,6 +40,14 @@ public class IPromotionMapperImpl implements IPromotionMapper {
         promotionEntity.setIsDelete( promotionRequest.getIsDelete() );
         promotionEntity.setApplicableCondition( promotionRequest.getApplicableCondition() );
         promotionEntity.setUsageLimit( promotionRequest.getUsageLimit() );
+        List<AccountEntity> list = promotionRequest.getApplicableAccount();
+        if ( list != null ) {
+            promotionEntity.setApplicableAccount( new ArrayList<AccountEntity>( list ) );
+        }
+        List<ProductEntity> list1 = promotionRequest.getApplicableProducts();
+        if ( list1 != null ) {
+            promotionEntity.setApplicableProducts( new ArrayList<ProductEntity>( list1 ) );
+        }
         promotionEntity.setPromotionType( promotionRequest.getPromotionType() );
         promotionEntity.setCreatedBy( promotionRequest.getCreatedBy() );
 
@@ -63,6 +75,14 @@ public class IPromotionMapperImpl implements IPromotionMapper {
         promotionResponse.isDelete( promotionEntity.getIsDelete() );
         promotionResponse.applicableCondition( promotionEntity.getApplicableCondition() );
         promotionResponse.usageLimit( promotionEntity.getUsageLimit() );
+        List<AccountEntity> list = promotionEntity.getApplicableAccount();
+        if ( list != null ) {
+            promotionResponse.applicableAccount( new ArrayList<AccountEntity>( list ) );
+        }
+        List<ProductEntity> list1 = promotionEntity.getApplicableProducts();
+        if ( list1 != null ) {
+            promotionResponse.applicableProducts( new ArrayList<ProductEntity>( list1 ) );
+        }
         promotionResponse.promotionType( promotionEntity.getPromotionType() );
         promotionResponse.createdBy( promotionEntity.getCreatedBy() );
 
