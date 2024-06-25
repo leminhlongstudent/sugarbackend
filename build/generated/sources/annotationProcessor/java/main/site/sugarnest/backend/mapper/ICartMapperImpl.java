@@ -8,7 +8,7 @@ import site.sugarnest.backend.entities.CartItemEntity;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-25T03:40:20+0700",
+    date = "2024-06-25T09:25:31+0700",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.7.jar, environment: Java 18.0.2 (Amazon.com Inc.)"
 )
 @Component
