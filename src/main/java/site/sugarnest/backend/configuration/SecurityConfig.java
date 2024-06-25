@@ -99,7 +99,7 @@ public class SecurityConfig {
                         .successHandler((request, response, authentication) -> {
                             OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
                             String jwtToken = (String) oAuth2User.getAttributes().get("jwtToken");
-                            response.sendRedirect("https://sugarnest.netlify.app/?token=" + jwtToken);
+                            response.sendRedirect("https://gizmohubphone.netlify.app/?token=" + jwtToken);
                         })
         );
 
