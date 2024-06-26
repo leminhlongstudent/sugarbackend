@@ -38,22 +38,6 @@ public class PromotionEntity {
 
     private Integer usageLimit; // Giới hạn số lần sử dụng
 
-    @ManyToMany
-    @JoinTable(
-            name = "promotion_applicable_account",
-            joinColumns = @JoinColumn(name = "promotion_id"),
-            inverseJoinColumns = @JoinColumn(name = "account_id")
-    )
-    private List<AccountEntity> applicableAccount;
-
-    @ManyToMany
-    @JoinTable(
-            name = "promotion_applicable_products",
-            joinColumns = @JoinColumn(name = "promotion_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<ProductEntity> applicableProducts;
-
     private String promotionType; // Loại khuyến mãi (giảm giá, tặng quà, ...)
 
     private String createdBy;

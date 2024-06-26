@@ -76,8 +76,6 @@ public class CartService {
             cartItem = new CartItemEntity();
             cartItem.setCartEntity(cart);
             cartItem.setProductEntity(product);
-            cartItem.setCustomPath(cartItemRequest.getCustomPath());
-            cartItem.setIsCustom(cartItemRequest.getIsCustom());
             cartItem.setQuantity(cartItemRequest.getQuantity());
             cartItem.setProductSize(cartItemRequest.getProductSize());
             cartItem.setProductColor(cartItemRequest.getProductColor());

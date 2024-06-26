@@ -60,11 +60,6 @@ public class ProductEntity {
     @OneToMany(mappedBy = "productEntity")
     @JsonIgnore
     private List<OrderDetailEntity> orderDetailsEntity;
+
     private int views;
-    @Column(nullable = false,columnDefinition = "tinyint default 0")
-    private Boolean canCustom = false;
-    @Column(nullable = true,columnDefinition = "TEXT")
-    private String borderPath;
-    @Column(nullable = true,columnDefinition = "TEXT")
-        private String backgroundPath;
 }

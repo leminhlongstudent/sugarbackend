@@ -6,19 +6,12 @@ import com.paypal.base.rest.PayPalRESTException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import site.sugarnest.backend.dto.request.PaymentRequest;
-import site.sugarnest.backend.entities.AccountEntity;
-import site.sugarnest.backend.reponsitoties.IAccountRepository;
-import site.sugarnest.backend.service.account.AccountService;
 
 
 import java.util.*;
 
 @Service
 public class PayPalService {
-    @Autowired
-    private IAccountRepository iAccountRepository;
-    @Autowired
-    private AccountService accountService;
 
     @Autowired
     private APIContext apiContext;
@@ -70,13 +63,12 @@ public class PayPalService {
         Payment payment = new Payment();
         payment.setId(paymentId);
 
-
         PaymentExecution paymentExecution = new PaymentExecution();
         paymentExecution.setPayerId(payerId);
         try {
             Payment executedPayment = payment.execute(apiContext, paymentExecution);
             if (executedPayment.getState().equals("approved")) {
-
+                // code luu database
 
                 System.out.println("Payment successful");
             }
