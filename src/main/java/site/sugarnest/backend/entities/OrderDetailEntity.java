@@ -20,12 +20,12 @@ public class OrderDetailEntity {
     @ManyToOne
     @JoinColumn(name = "id_product", nullable = false)
     private ProductEntity productEntity;
-    @Column(name = "custom_path",columnDefinition = "TEXT")
-    private String customPath;
-    @Column(name = "is_Custom",columnDefinition = "tinyint default 0")
-    private Boolean isCustom = false;
+
     private Integer quantity;
+
     private Double price;
+
     private String productSize;
+
     private String productColor;
 }

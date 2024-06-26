@@ -22,7 +22,6 @@ public class OrderController {
 
     @PostMapping
     public ApiResponse<OrderResponse> createOrder(@RequestBody OrderRequest orderRequest) {
-        System.out.println("cc");
         OrderResponse orderResponse = iorderService.saveOrder(orderRequest);
         return ApiResponse.<OrderResponse>builder()
                 .code(200)
@@ -36,21 +35,6 @@ public class OrderController {
         return ApiResponse.<List<OrderResponse>>builder()
                 .code(200)
                 .result(orderResponseList)
-                .build();
-    }
-    @GetMapping("point")
-    public ApiResponse<Double> getPoint() {
-       Double point = iorderService.getPoint();
-        return ApiResponse.<Double>builder()
-                .code(200)
-                .result(point)
-                .build();
-    }
-    @GetMapping("set-point")
-    public ApiResponse<Double> setPoint() {
-       iorderService.setPoint();
-        return ApiResponse.<Double>builder()
-                .code(200)
                 .build();
     }
 
@@ -104,7 +88,6 @@ public class OrderController {
                 .build();
     }
 
-
     @GetMapping("total-amount")
     @PreAuthorize("hasAuthority('ORDERS_GET')")
     public ApiResponse<Double> getTotalAmount() {
@@ -120,18 +103,12 @@ public class OrderController {
     public ApiResponse<Map<String, Double>> getRevenue(@RequestParam("startMonth") int startMonth,
                                                        @RequestParam("startYear") int startYear,
                                                        @RequestParam("endMonth") int endMonth,
-                                                       @RequestParam("endYear") int endYear,
-                                                       @RequestParam(value = "viewBy", required = false, defaultValue = "month") String viewBy) {
-        Map<String, Double> revenueData;
-        if ("day".equalsIgnoreCase(viewBy)) {
-            revenueData = iorderService.getDailyRevenue(startMonth, startYear, endMonth, endYear);
-        } else {
-            revenueData = iorderService.getMonthlyRevenue(startMonth, startYear, endMonth, endYear);
-        }
+                                                       @RequestParam("endYear") int endYear) {
         return ApiResponse.<Map<String, Double>>builder()
                 .code(200)
-                .result(revenueData)
+                .result(iorderService.getMonthlyRevenue(startMonth, startYear, endMonth, endYear))
                 .build();
+
     }
 
     @GetMapping("/revenue-by-category")

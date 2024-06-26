@@ -8,7 +8,6 @@ import site.sugarnest.backend.dto.response.OrderResponse;
 import site.sugarnest.backend.entities.*;
 import site.sugarnest.backend.mapper.IOrderMapper;
 import site.sugarnest.backend.reponsitoties.*;
-import site.sugarnest.backend.service.account.AccountService;
 import site.sugarnest.backend.service.account.IAccountService;
 import site.sugarnest.backend.service.cart.CartService;
 
@@ -31,8 +30,6 @@ public class OrderService implements IOrderService {
 
     @Autowired
     private IOrderRepository iorderRepository;
-    @Autowired
-    private IAccountRepository iAccountRepository;
 
     @Autowired
     private CartService cartService;
@@ -40,8 +37,6 @@ public class OrderService implements IOrderService {
     @Autowired
     private ICartRepository cartRepository;
 
-    @Autowired
-    private AccountService accountService;
 
     @Autowired
     private IOrderMapper orderMapper;
@@ -49,21 +44,7 @@ public class OrderService implements IOrderService {
     @Autowired
     private IInventoryRepository iInventoryRepository;
 
-    @Autowired
-    ISizeColorProductRepository iSizeColorProductRepository;
-
-    @Override
-    public Double getPoint(){
-        return accountService.getAccount().getPoint();
-    }
-
-    @Override
-    public void setPoint() {
-        AccountEntity account = accountService.getAccount();
-        account.setPoint(0.0);
-        iAccountRepository.save(account);
-    }
-
+    @Autowired ISizeColorProductRepository iSizeColorProductRepository;
 
     @Override
     @Transactional
@@ -71,18 +52,11 @@ public class OrderService implements IOrderService {
         CartEntity cart = cartService.getMyCart();
         List<CartItemEntity> cartItems = cart.getCartItems();
         OrderEntity order = getOrderEntity(orderRequest, cart);
-        AccountEntity account = accountService.getAccount();
-        if (orderRequest.getStatusPay() != null && orderRequest.getStatusPay().equals("Đã thanh toán")) {
-            double accountPoint = account.getPoint();
-            double point = order.getTotalPrice() * 0.01;
-            account.setPoint(accountPoint + point);
-            iAccountRepository.save(account);
+        if (orderRequest.getStatusPay()!=null && orderRequest.getStatusPay().equals("Đã thanh toán")){
             order.setStatusPay("Đã thanh toán");
-        } else {
+        }else {
             order.setStatusPay("Chưa thanh toán");
         }
-        System.out.println(account);
-        order.setTotalPrice(orderRequest.getTotalPrice());
         iorderRepository.save(order);
 
         for (CartItemEntity cartItem : cartItems) {
@@ -93,13 +67,11 @@ public class OrderService implements IOrderService {
             orderDetail.setQuantity(cartItem.getQuantity());
             orderDetail.setProductEntity(cartItem.getProductEntity());
             orderDetail.setOrderEntity(order);
-            orderDetail.setCustomPath(cartItem.getCustomPath());
-            orderDetail.setIsCustom(cartItem.getIsCustom());
             order.getOrderItems().add(orderDetail);
             Long productId = cartItem.getProductEntity().getId();
             SizeColorProductEntity sizeColorProduct = iSizeColorProductRepository.findByProductEntityIdAndSizeAndColor(productId, cartItem.getProductSize(), cartItem.getProductColor());
             InventoryEntity inventory = sizeColorProduct.getInventoryEntity();
-            if (inventory.getQuantity() < cartItem.getQuantity()) {
+            if(inventory.getQuantity() < cartItem.getQuantity()){
                 return null;
             }
             inventory.setQuantity(inventory.getQuantity() - cartItem.getQuantity());
@@ -107,7 +79,6 @@ public class OrderService implements IOrderService {
             iOrderDetailRepository.save(orderDetail);
             iCartItemRepository.delete(cartItem);
         }
-
         cart.getCartItems().removeAll(cartItems);
         cart.setUpdatedAt(new Date());
         cart.setTotalPrice(0.0);
@@ -228,27 +199,6 @@ public class OrderService implements IOrderService {
         ));
 
         return monthlyRevenue;
-    }
-    @Override
-    public Map<String, Double> getDailyRevenue(int startMonth, int startYear, int endMonth, int endYear) {
-        List<OrderEntity> orders = iorderRepository.findAll();
-        Map<String, Double> revenueByDay = new HashMap<>();
-
-        for (OrderEntity order : orders) {
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(order.getCreateAt());
-            int orderMonth = cal.get(Calendar.MONTH) + 1; // Calendar.MONTH is zero-based
-            int orderYear = cal.get(Calendar.YEAR);
-
-            if ((orderYear > startYear || (orderYear == startYear && orderMonth >= startMonth)) &&
-                    (orderYear < endYear || (orderYear == endYear && orderMonth <= endMonth))) {
-                String day = orderYear + "-" + (orderMonth < 10 ? "0" : "") + orderMonth + "-" + (cal.get(Calendar.DAY_OF_MONTH) < 10 ? "0" : "") + cal.get(Calendar.DAY_OF_MONTH);
-                Double revenue = order.getOrderItems().stream().mapToDouble(detail -> detail.getPrice() * detail.getQuantity()).sum();
-                revenueByDay.put(day, revenueByDay.getOrDefault(day, 0.0) + revenue);
-            }
-        }
-
-        return revenueByDay;
     }
 
     @Override

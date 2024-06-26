@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface IOrderService {
-    public Double getPoint();
-    public void setPoint();
     OrderResponse saveOrder(OrderRequest orderRequest);
     List<OrderResponse> getOrders();
     List<OrderResponse> getOrdersByAdmin();
@@ -18,6 +16,5 @@ public interface IOrderService {
     Long getTotalOrders();
     Double getTotalAmount();
     Map<String, Double> getMonthlyRevenue(int startMonth, int startYear, int endMonth, int endYear);
-    Map<String, Double> getDailyRevenue(int startMonth, int startYear, int endMonth, int endYear);
     Map<String, Double> getRevenueByCategoryForMonth(int month, int year);
 }

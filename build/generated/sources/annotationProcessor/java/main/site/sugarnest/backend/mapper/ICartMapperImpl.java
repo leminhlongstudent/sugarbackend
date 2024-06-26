@@ -8,7 +8,7 @@ import site.sugarnest.backend.entities.CartItemEntity;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-25T09:25:31+0700",
+    date = "2024-06-26T13:15:16+0700",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.7.jar, environment: Java 18.0.2 (Amazon.com Inc.)"
 )
 @Component
@@ -27,8 +27,6 @@ public class ICartMapperImpl implements ICartMapper {
         }
         cartItemResponse.productSize( cartItemEntity.getProductSize() );
         cartItemResponse.productColor( cartItemEntity.getProductColor() );
-        cartItemResponse.customPath( cartItemEntity.getCustomPath() );
-        cartItemResponse.isCustom( cartItemEntity.getIsCustom() );
 
         return cartItemResponse.build();
     }
@@ -44,8 +42,6 @@ public class ICartMapperImpl implements ICartMapper {
         cartItemEntity.setQuantity( cartItemDto.getQuantity() );
         cartItemEntity.setProductSize( cartItemDto.getProductSize() );
         cartItemEntity.setProductColor( cartItemDto.getProductColor() );
-        cartItemEntity.setCustomPath( cartItemDto.getCustomPath() );
-        cartItemEntity.setIsCustom( cartItemDto.getIsCustom() );
 
         return cartItemEntity;
     }

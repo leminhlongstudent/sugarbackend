@@ -16,6 +16,4 @@ public class CartItemRequest {
     private int quantity;
     private String productSize;
     private String productColor;
-    private String customPath;
-    private Boolean isCustom = false;
 }
